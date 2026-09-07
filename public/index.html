@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <title>𝅘𝅥𝅮 mini melodies</title>
+        <meta charset='utf-8' />
+        <script src='js/main.js'></script>
+        <link rel='stylesheet' href='css/main.css' />
+
+        <!-- get rid of favicon error -->
+        <link rel='icon' href='data:;base64,iVBORw0KGgo=' />
+    </head>
+
+    <body>
+        <header>
+            <h1>𝅘𝅥𝅮 mini melodies</h1>
+        </header>
+        <main>
+            <h2>make a melody</h2>
+            <div id="melody-maker">
+                <div id="melody">
+                    <button id="play">▶</button>
+                    <!-- Note inputs are generated here in code -->
+                </div>
+                <div id="instructions">
+                    1-8 are the notes of the major scale, 0 is silence.<br>
+                    write your melody, give it a title, and submit it to the collection.
+                </div>
+                <div id="details">
+                    <label for="title-input">melody title:</label> <input type="text" id="title-input">
+                    <label for="composer-input">your name:</label> <input type="text" id="composer-input">
+                    <button id="submit">submit</button>
+                </div>
+            </div>
+            <h2>collection</h2>
+            <div id="collection">
+                <!-- Collection items are generated here in code -->
+                <p>nothing here yet...</p>
+            </div>
+        </main>
+    </body>
+</html>
