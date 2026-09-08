@@ -1,42 +1,42 @@
-const http = require('http'),
-    fs   = require('fs'),
-    // IMPORTANT: you must run `npm install` in the directory for this assignment
-    // to install the mime library if you're testing this on your local machine.
-    // On Render, make sure `npm install` is your build command.
-    mime = require('mime'),
-    dir  = 'public/',
-    port = 3000
+const express = require('express')
+const app = express(),
+    defaultPort = 3000
 
 // Collection of all the melodies that have been submitted
 const collection = []
 
-const server = http.createServer(function(request,response) {
-    if (request.method === 'GET') {
-        handleGet(request, response)
-    } else if (request.method === 'POST') {
-        handlePost(request, response)
-    }
-})
+/**
+ * Logs the URLs of incoming requests to the console.
+ */
+const middleware_logger = (request, response, next) => {
+    console.log("Request to " + request.url)
+    next()
+}
 
-const handleGet = function(request, response) {
-    console.log("Received GET request: " + request.url);
+/**
+ * Returns the entire collection, or a specific item from the collection if one is requested.
+ */
+const middleware_get_collection = (request, response) => {
+    const collItemTitle = decodeURI(request.url).slice(1); // Cuts "/" off the front
+    if (collItemTitle.length > 0) {
+        // Send the specified item from the collection
+        let item = collection.find((item) => item.title === collItemTitle)
 
-    if (request.url === '/') {
-        sendFile(response, 'public/index.html');
-    } else if (request.url.startsWith('/collection')) {
-        const collItemTitle = request.url.slice(12); // Cuts "/collection/" off the front
-        if (collItemTitle.length > 0) {
-            sendCollectionItem(response, collItemTitle);
+        if (item) {
+            response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+            response.end(JSON.stringify(item))
         } else {
-            sendFullCollection(response);
+            response.writeHead(404, "Not Found")
+            response.end('Item Not Found')
         }
     } else {
-        const filename = dir + request.url.slice(1);
-        sendFile(response, filename);
+        // Send the full collection
+        response.writeHead(200, "OK", { "Content-Type": "text/plain"})
+        response.end(JSON.stringify(collection))
     }
 }
 
-const handlePost = function(request, response) {
+const middleware_post = (request, response) => {
     console.log("Received POST request: " + request.url)
     let dataString = ''
 
@@ -45,7 +45,7 @@ const handlePost = function(request, response) {
     })
 
     request.on('end', function() {
-        let dataJson = JSON.parse(dataString)
+        const dataJson = JSON.parse(dataString)
 
         // Calculates the "vibes" of the melody (the sum of all the note numbers) on a scale of sleepy (0) to flamin' hot (64)
         let vibes = 0
@@ -68,52 +68,9 @@ const handlePost = function(request, response) {
     })
 }
 
-const sendFile = function(response, filename) {
-    const type = mime.getType(filename)
+app.use(middleware_logger)
+app.use(express.static("public"))
+app.use("/collection", middleware_get_collection)
+app.post("/submit", express.json(), middleware_post)
 
-    fs.readFile(filename, function(err, content) {
-
-        // if the error = null, then we've loaded the file successfully
-        if (err === null) {
-
-            // status code: https://httpstatuses.com
-            response.writeHeader(200, { 'Content-Type': type })
-            response.end(content)
-
-        } else {
-
-            // file not found, error code 404
-            response.writeHeader(404)
-            response.end('404 Error: File Not Found')
-
-        }
-    })
-}
-
-/**
- * Stringifies and sends the specified item from the collection to the client.
- */
-const sendCollectionItem = function (response, title) {
-    let item = collection.find((item) => item.title === title)
-
-    if (item) {
-        let content = JSON.stringify(item)
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
-        response.end(content)
-    } else {
-        response.writeHead(404, "Not Found")
-        response.end('Item Not Found')
-    }
-}
-
-/**
- * Stringifies and sends the full collection to the client.
- */
-const sendFullCollection = function (response) {
-    let content = JSON.stringify(collection)
-
-    response.writeHead(200, "OK", { "Content-Type": "text/plain"})
-    response.end(content)
-}
-
-server.listen(process.env.PORT || port)
+app.listen(process.env.PORT || defaultPort)
