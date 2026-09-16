@@ -2,7 +2,7 @@
   "name": "a3-lexjohnson",
   "version": "1.0.0",
   "description": "",
-  "main": "old_server.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,12 @@
   },
   "private": true,
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mime": "^4.1.0"
+    "mime": "^4.1.0",
+    "mongodb": "^7.6.0"
+  },
+  "engines": {
+    "node": ">=16.0"
   }
 }

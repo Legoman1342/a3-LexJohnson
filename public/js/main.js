@@ -154,6 +154,7 @@ async function makeCollection() {
         collectionDiv.innerHTML = "" // Clear the div before repopulating it to avoid duplicates
         collection.reverse().forEach((collItem) => {
             // Calculate fields as strings
+            let id = collItem._id.toString()
             let title = collItem.title
             let composer = collItem.composer
             let melody = ""
@@ -172,7 +173,7 @@ async function makeCollection() {
                 <p class="coll-item-melody">${melody}</p>
                 <p class="coll-item-vibes">vibes: ${vibesAdjective} (${vibes})</p>
             </div>
-            <button class="coll-item-load" onclick="loadMelody('${title}')">load</button>`
+            <button class="coll-item-load" onclick="loadMelody('${id}')">load</button>`
             collectionDiv.appendChild(collItemDiv)
         })
     }
