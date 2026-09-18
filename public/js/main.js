@@ -279,6 +279,7 @@ window.onload = function() {
         let noteInput = document.createElement("input");
         noteInput.id = "note-input-" + i;
         noteInput.className = "note-input"
+        noteInput.ariaLabel = "note " + i;
         noteInput.type = "number"
         noteInput.min = "0";
         noteInput.max = "8";
