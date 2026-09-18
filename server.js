@@ -71,6 +71,15 @@ const middleware_get_collection = async (request, response) => {
 }
 
 /**
+ * Returns every collection item that was composed by the given user.
+ */
+const middleware_get_user_collection = async (request, response) => {
+    const username = decodeURI(request.url).slice(1); // Cuts "/" off the front
+
+    const collection = await melody_collection.find({composer: username}).toArray()
+    response.json(collection)
+}
+/**
  * Submits a new melody to the collection.
  */
 const middleware_post_melody = (request, response) => {
@@ -229,6 +238,7 @@ app.use(cookie({
 app.use(express.static("public"))
 
 app.use("/collection", middleware_get_collection)
+app.use("/user-collection", middleware_get_user_collection)
 app.post("/submit", express.json(), middleware_post_melody)
 
 app.use("/user", middleware_get_user)

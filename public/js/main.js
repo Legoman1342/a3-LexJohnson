@@ -190,11 +190,22 @@ function getVibesAdjective(vibes) {
  * Retrieves the collection from the server and fills in the webpage with collection items.
  */
 async function makeCollection() {
-    const response = await fetch('/collection', {
-        method: "GET"
-    })
-    const collection = JSON.parse(await response.text())
+    // Gets the collection, either every item or just items composed by the current user
+    const showUserCollection = document.getElementById("show-user-collection").checked;
+    let collection = null
+    if (showUserCollection) {
+        const response = await fetch(`/user-collection/${username}`, {
+            method: "GET"
+        })
+        collection = JSON.parse(await response.text())
+    } else {
+        const response = await fetch('/collection', {
+            method: "GET"
+        })
+        collection = JSON.parse(await response.text())
+    }
 
+    // Puts the collection onto the page
     if (collection.length > 0) {
         const collectionDiv = document.getElementById("collection")
         collectionDiv.innerHTML = "" // Clear the div before repopulating it to avoid duplicates
@@ -251,13 +262,16 @@ window.onload = function() {
             document.getElementById("login").style = "visibility: visible";
             document.getElementById("composer-input").value = "log in to submit"
             document.getElementById("submit").disabled = true;
+            document.getElementById("show-user-collection").disabled = true;
         }
+        makeCollection()
     })
 
     // Set button actions
     document.getElementById("play").onclick = playButton
     document.getElementById("submit").onclick = submitButton
     document.getElementById("clear").onclick = clearButton
+    document.getElementById("show-user-collection").onclick = makeCollection
 
     // Generate the melody input fields
     let melodyInput = document.getElementById("melody")
@@ -274,6 +288,4 @@ window.onload = function() {
         }
         melodyInput.appendChild(noteInput);
     }
-
-    makeCollection()
 }

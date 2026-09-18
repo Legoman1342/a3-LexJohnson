@@ -83,7 +83,7 @@ h2 {
   align-items: center;
 }
 
-label {
+#details label {
   margin-left: 20px;
   margin-right: 10px;
 }
@@ -98,7 +98,7 @@ input, button, .button {
 
 #collection {
   border: 2px solid black;
-  margin: 0;
+  margin: 0 0 5vh 0;
   padding: 10px;
   height: max-content;
 
@@ -106,6 +106,10 @@ input, button, .button {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+}
+
+#show-user-collection-div {
+  padding-bottom: 0.5rem;
 }
 
 .coll-item {
@@ -160,6 +164,7 @@ input, button, .button {
 
 #login-form label {
   justify-self: flex-end;
+  margin-right: 0.5rem;
 }
 
 #login-form input {
