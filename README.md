@@ -28,5 +28,5 @@ combo (with no hashing or anything), mostly because it was the only
 option I could achieve with the time I had.
 
 ## Technical Achievements
-- **Lighthouse Test**: This webpage gets 100% in all four categories on the Google Lighthouse test. To verify this, make sure to run the test in an incognito window; I've found that some browser extensions add additional code that fails the tests.
-- **Web Audio API**: To play the melodies, I learned how to use the Web Audio API to build a simple synthesizer. I learned about connecting audio nodes to form a pipeline from an oscillator to the output, and I automated a gain node to make a nice-sounding envelope for each note. (I technically did the work for this in assignment 2, but since I didn't count it as a technical achievement before, I figured it's worth mentioning now.)
+- **Lighthouse Test** (5 points): This webpage gets 100% in all four categories on the Google Lighthouse test. To verify this, make sure to run the test in an incognito window; I've found that some browser extensions add additional code that fails the tests.
+- **Web Audio API** (5 points seems reasonable): To play the melodies, I learned how to use the Web Audio API to build a simple synthesizer. I learned about connecting audio nodes to form a pipeline from an oscillator to the output, and I automated a gain node to make a nice-sounding envelope for each note. (I technically did the work for this in assignment 2, but since I didn't count it as a technical achievement before, I figured it's worth mentioning now.)
