@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>𝅘𝅥𝅮 log in - mini melodies</title>
+        <title>𝅘𝅥𝅮 create account - mini melodies</title>
         <link rel="stylesheet" href="https://unpkg.com/simpledotcss/simple.min.css">
         <link rel='stylesheet' href='css/main.css' />
     </head>
@@ -11,16 +11,16 @@
             <h1>𝅘𝅥𝅮 mini melodies</h1>
             <div class="account-buttons">
                 <p id="logged-in-status">not logged in</p>
-                <a class="button" href="/create-account" style="visibility: visible">create account</a>
-                <a class="button" href="/login" style="visibility: visible" aria-current="page">log in</a>
+                <a class="button" href="/create-account" style="visibility: visible" aria-current="page">create account</a>
+                <a class="button" href="/login" style="visibility: visible">log in</a>
             </div>
         </nav>
         <main>
-            <h2>log in</h2>
-            <form id="login-form" action="/login-submit" method="POST">
+            <h2>create account</h2>
+            <form id="login-form" action="/create-account-submit" method="POST">
                 <div class="row"><label for="username">username:</label><input id="username" name="username" type="text" placeholder="jackson5" required /></div>
                 <div class="row"><label for="password">password:</label><input id="password" name="password" type="password" placeholder="abc123" required /></div>
-                <input type="submit" value="log in" />
+                <input type="submit" value="create account" />
             </form>
         </main>
     </body>

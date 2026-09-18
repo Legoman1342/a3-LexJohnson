@@ -24,8 +24,9 @@ h1 {
   align-items: center;
 }
 
-.account-buttons * {
+.account-buttons a {
   margin-left: 1rem;
+  visibility: collapse;
 }
 
 h2 {
@@ -33,6 +34,9 @@ h2 {
   font-weight: normal;
   margin-bottom: 5px;
 }
+
+
+/* ================ Main page ================ */
 
 #melody-maker {
   border: 2px solid black;
@@ -131,11 +135,12 @@ input, button, .button {
 }
 
 .coll-item-load {
-  /*font-size: ;*/
   margin: 15px;
 }
 
+
 /* ================ Login ================ */
+
 #login-form {
   border: 2px solid black;
   margin: 0;
@@ -160,4 +165,10 @@ input, button, .button {
 #login-form input {
   margin: 1em 0;
   width: 10vw;
+}
+
+.notice {
+  padding: 0.75rem;
+  background-color: white;
+  font-style: italic;
 }

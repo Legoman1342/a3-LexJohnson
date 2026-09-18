@@ -14,6 +14,11 @@ const frequencies = {
 // List of notes to play
 let melody = []
 
+// Info about the current user
+let loggedIn = false,
+    userID = null,
+    username = null;
+
 /**
  * Plays the specified note for 1 eighth note (0.25 seconds).
  * @param note Integer representing the note to play
@@ -179,7 +184,32 @@ async function makeCollection() {
     }
 }
 
+/**
+ * Populates variables about the logged-in user (`loggedIn`, `userID`, and `username`).
+ */
+async function getCurrentUser() {
+    const response = await fetch('/current-user', {
+        method: "GET"
+    })
+    const current_user = JSON.parse(await response.text())
+
+    loggedIn = current_user.loggedIn;
+    userID = current_user.userID;
+    username = current_user.username;
+}
+
 window.onload = function() {
+    //Populates variables about the logged-in user (loggedIn, userID, and username)
+    getCurrentUser().then(() => {
+        if (loggedIn) {
+            document.getElementById("logged-in-status").innerText = `logged in as ${username}`
+            document.getElementById("logout").style = "visibility: visible";
+        } else {
+            document.getElementById("create-account").style = "visibility: visible";
+            document.getElementById("login").style = "visibility: visible";
+        }
+    })
+
     // Set button actions
     document.getElementById("play").onclick = playButton
     document.getElementById("submit").onclick = submitButton
