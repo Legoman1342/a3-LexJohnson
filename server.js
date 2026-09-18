@@ -204,19 +204,23 @@ const middleware_get_current_user = function (request, response) {
 // ================ Middleware for login/logout pages ================
 
 const middleware_login_page = (request, response) => {
-    if (request.session.loggedIn === false) {
-        response.sendFile(__dirname + "/public/login.html");
-    } else {
-        response.redirect("/");
-    }
+    // if (request.session.loggedIn === false) {
+    //     response.sendFile(__dirname + "/public/login.html");
+    // } else {
+    //     response.redirect("/");
+    // }
+
+    response.sendFile(__dirname + "/public/login.html");
 }
 
 const middleware_create_account_page = (request, response) => {
-    if (request.session.loggedIn === false) {
-        response.sendFile(__dirname + "/public/create_account.html");
-    } else {
-        response.redirect("/");
-    }
+    // if (request.session.loggedIn === false) {
+    //     response.sendFile(__dirname + "/public/create_account.html");
+    // } else {
+    //     response.redirect("/");
+    // }
+
+    response.sendFile(__dirname + "/public/create_account.html");
 }
 
 const middleware_logout = (request, response) => {
