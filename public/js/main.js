@@ -206,8 +206,8 @@ async function makeCollection() {
     }
 
     // Puts the collection onto the page
+    const collectionDiv = document.getElementById("collection")
     if (collection.length > 0) {
-        const collectionDiv = document.getElementById("collection")
         collectionDiv.innerHTML = "" // Clear the div before repopulating it to avoid duplicates
         collection.reverse().forEach((collItem) => {
             // Calculate fields as strings
@@ -233,6 +233,8 @@ async function makeCollection() {
             <button class="coll-item-load" onclick="loadMelody('${id}')">load</button>`
             collectionDiv.appendChild(collItemDiv)
         })
+    } else {
+        collectionDiv.innerHTML = "<p>nothing here yet...</p>"
     }
 }
 
