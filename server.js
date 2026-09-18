@@ -92,6 +92,12 @@ const middleware_post_melody = (request, response) => {
         })
         dataJson.vibes = vibes
 
+        // Check for duplicates and remove them
+        await melody_collection.deleteOne({
+            title: dataJson.title,
+            composer: dataJson.composer
+        })
+
         // Add the new item
         const result = await melody_collection.insertOne(dataJson)
         response.json(result)

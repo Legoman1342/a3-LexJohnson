@@ -50,10 +50,23 @@ function playNote(note, callback) {
 function playMelody() {
     if (melody.length > 0) {
         document.getElementById("play").disabled = true
+        for (let noteInput of document.getElementsByClassName('note-input')) {
+            noteInput.disabled = true;
+        }
+        for (let loadButton of document.getElementsByClassName('coll-item-load')) {
+            loadButton.disabled = true;
+        }
+
         let note = melody.shift()
         playNote(note, playMelody)
     } else {
         document.getElementById("play").disabled = false
+        for (let noteInput of document.getElementsByClassName('note-input')) {
+            noteInput.disabled = false;
+        }
+        for (let loadButton of document.getElementsByClassName('coll-item-load')) {
+            loadButton.disabled = false;
+        }
     }
 }
 
@@ -80,6 +93,21 @@ async function loadMelody(title) {
     document.getElementById("composer-input").value = collItem.composer
     for (let i = 0; i < 8; i++) {
         document.getElementById("note-input-" + i).value = collItem.melody[i]
+    }
+
+    // Enable editing and submitting if the melody is the current user's, disable if it's someone else's
+    if (collItem.composer === username) {
+        for (let noteInput of document.getElementsByClassName('note-input')) {
+            noteInput.disabled = false;
+        }
+        document.getElementById("title-input").disabled = false;
+        document.getElementById("submit").disabled = false;
+    } else {
+        for (let noteInput of document.getElementsByClassName('note-input')) {
+            noteInput.disabled = true;
+        }
+        document.getElementById("title-input").disabled = true;
+        document.getElementById("submit").disabled = true;
     }
 
     makeMelody()
@@ -125,6 +153,19 @@ async function submitButton(event) {
     console.log('Response from server:', text)
 
     makeCollection()
+}
+
+function clearButton() {
+    for (let noteInput of document.getElementsByClassName('note-input')) {
+        noteInput.disabled = false;
+        noteInput.value = 0;
+    }
+    document.getElementById("title-input").value = '';
+    document.getElementById("title-input").disabled = false;
+    document.getElementById("composer-input").value = loggedIn ? username : "log in to submit";
+    if (loggedIn) {
+        document.getElementById("submit").disabled = false;
+    }
 }
 
 /**
@@ -199,20 +240,24 @@ async function getCurrentUser() {
 }
 
 window.onload = function() {
-    //Populates variables about the logged-in user (loggedIn, userID, and username)
+    // Updates the page based on the logged-in user
     getCurrentUser().then(() => {
         if (loggedIn) {
             document.getElementById("logged-in-status").innerText = `logged in as ${username}`
             document.getElementById("logout").style = "visibility: visible";
+            document.getElementById("composer-input").value = username;
         } else {
             document.getElementById("create-account").style = "visibility: visible";
             document.getElementById("login").style = "visibility: visible";
+            document.getElementById("composer-input").value = "log in to submit"
+            document.getElementById("submit").disabled = true;
         }
     })
 
     // Set button actions
     document.getElementById("play").onclick = playButton
     document.getElementById("submit").onclick = submitButton
+    document.getElementById("clear").onclick = clearButton
 
     // Generate the melody input fields
     let melodyInput = document.getElementById("melody")
